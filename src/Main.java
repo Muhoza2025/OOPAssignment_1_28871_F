@@ -417,4 +417,58 @@ public class Main {
         }
     }
 
+    public static void registerCourse() {
+        try {
+
+            if (Main.departments.isEmpty()) {
+
+                System.out.println(
+                        "Register a Department First.");
+
+                return;
+            }
+
+            System.out.print("Course ID: ");
+            String courseId = Main.sc.nextLine();
+
+            System.out.print("Course Name: ");
+            String courseName = Main.sc.nextLine();
+
+            System.out.print("Course Code: ");
+            String courseCode = Main.sc.nextLine();
+
+            System.out.print("Credits: ");
+            int credits = Integer.parseInt(Main.sc.nextLine());
+
+            System.out.println("\nSelect Department");
+
+            for(int i = 0;
+                i < Main.departments.size();
+                i++) {
+
+                System.out.println(
+                        (i + 1)
+                                + ". "
+                                + Main.departments.get(i));
+            }
+
+            int depChoice = Integer.parseInt(Main.sc.nextLine());
+
+            Department department =
+                    Main.departments.get(depChoice - 1);
+
+            Course course = new Course( courseId,courseName,courseCode,credits,department, null);
+
+            course.validate();
+
+            Main.courses.add(course);
+
+            System.out.println("Course Registered Successfully.");
+
+        }
+         catch (ValidationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
