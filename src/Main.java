@@ -471,4 +471,220 @@ public class Main {
         }
     }
 
+   public static void registerClassroom() {
+        try {
+
+            System.out.print("Classroom ID: ");
+            String classroomId = Main.sc.nextLine();
+
+            System.out.print("Room Number: ");
+            String roomNumber = Main.sc.nextLine();
+
+            System.out.print("Building Name: ");
+            String buildingName = Main.sc.nextLine();
+
+            System.out.print("Capacity: ");
+            int capacity = Integer.parseInt(Main.sc.nextLine());
+
+            System.out.print("Floor Number: ");
+            int floorNumber = Integer.parseInt(Main.sc.nextLine());
+
+            System.out.print("Available: ");
+            boolean available = Boolean.parseBoolean(Main.sc.nextLine());
+
+            Classroom classroom = new Classroom(classroomId, roomNumber, buildingName, capacity, floorNumber, available);
+
+            classroom.validate();
+
+            Main.classrooms.add(classroom);
+
+            System.out.println("Classroom Registered Successfully.");
+
+        }
+         catch (ValidationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+  public static void registerEnrollment() {
+        try {            
+
+            if (Main.students.isEmpty()) {
+
+                System.out.println(
+                        "Register a Student First.");
+
+                return;
+            }
+
+            if (Main.courses.isEmpty()) {
+
+                System.out.println(
+                        "Register a Course First.");
+
+                return;
+            }
+
+            System.out.println("\nSelect Student");
+
+            for(int i = 0;
+                i < Main.students.size();
+                i++) {
+
+                System.out.println(
+                        (i + 1)
+                                + ". "
+                                + Main.students.get(i));
+            }
+
+            int studentChoice = Integer.parseInt(Main.sc.nextLine());
+
+            Student student =
+                    Main.students.get(studentChoice - 1);
+
+            System.out.println("\nSelect Course");
+
+            for(int i = 0;
+                i < Main.courses.size();
+                i++) {
+
+                System.out.println(
+                        (i + 1)
+                                + ". "
+                                + Main.courses.get(i));
+            }
+
+            int courseChoice = Integer.parseInt(Main.sc.nextLine());
+
+            Course course =
+                    Main.courses.get(courseChoice - 1);
+
+            System.out.print("Enrollment ID: ");
+            String enrollmentId = Main.sc.nextLine();
+            System.out.print("Enrollment Date: ");
+            LocalDate enrollmentDate = LocalDate.parse(Main.sc.nextLine());
+            System.out.print("Semester: ");
+            String semester = Main.sc.nextLine();
+            System.out.print("Enrollment Status: ");
+            String enrollmentStatus = Main.sc.nextLine();
+
+            Enrollment enrollment = new Enrollment(enrollmentId, student, course, enrollmentDate, semester, enrollmentStatus);
+
+            enrollment.validate();
+
+            Main.enrollments.add(enrollment);
+
+            System.out.println("Enrollment Registered Successfully.");
+
+        }
+         catch (ValidationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void registerAssessment() {
+        try {
+
+            if (Main.enrollments.isEmpty()) {
+
+                System.out.println(
+                        "Register an Enrollment First.");
+
+                return;
+            }
+
+            System.out.println("\nSelect enrollment");
+
+            for(int i = 0;
+                i < Main.enrollments.size();
+                i++) {
+
+                System.out.println(
+                        (i + 1)
+                                + ". "
+                                + Main.enrollments.get(i));
+            }
+
+            int enrollmentChoice = Integer.parseInt(Main.sc.nextLine());
+
+            Enrollment enrollment = Main.enrollments.get(enrollmentChoice - 1);
+            Course course = enrollment.getCourse();
+
+            System.out.print("Assessment ID: ");
+            String assessmentId = Main.sc.nextLine();
+            System.out.print("Assessment Type: ");
+            String assessmentType = Main.sc.nextLine();
+            System.out.print("Assessment Date: ");
+            LocalDate assessmentDate = LocalDate.parse(Main.sc.nextLine());
+            System.out.print("Total MarksMaximumScore: ");
+            int maximumScore = Integer.parseInt(Main.sc.nextLine());
+            System.out.print("Obtained Score: ");
+            int obtainedScore = Integer.parseInt(Main.sc.nextLine());
+
+            Assessment assessment = new Assessment(assessmentId, enrollment,  assessmentType, maximumScore, obtainedScore, assessmentDate);
+
+            assessment.validate();
+
+            Main.assessments.add(assessment);
+
+            System.out.println("Assessment Registered Successfully.");
+
+        }
+         catch (ValidationException e) {
+            throw new RuntimeException(e);
+        }
+
+        public static void registerFeePayment() {
+            try {
+                
+                if (Main.students.isEmpty()) {
+
+                    System.out.println(
+                            "Register a Student First.");
+
+                    return;
+                }
+
+                System.out.println("\nSelect Student");
+
+                for(int i = 0;
+                    i < Main.students.size();
+                    i++) {
+
+                    System.out.println(
+                            (i + 1)
+                                    + ". "
+                                    + Main.students.get(i));
+                }
+
+                int studentChoice = Integer.parseInt(Main.sc.nextLine());
+
+                Student student =
+                        Main.students.get(studentChoice - 1);
+
+                
+                
+                System.out.print("Payment ID: ");
+                String paymentId = Main.sc.nextLine();
+                System.out.println("ammount: ");
+                BigDecimal amount = new BigDecimal(Main.sc.nextLine());
+                System.out.print("Payment Date: ");
+                LocalDate paymentDate = LocalDate.parse(Main.sc.nextLine());
+                System.out.print("Amount Paid: ");
+                BigDecimal amountPaid = new BigDecimal(Main.sc.nextLine());
+                System.out.print("Payment Method: ");
+                String paymentMethod = Main.sc.nextLine();
+
+                FeePayment payment = new FeePayment(paymentId, student, amount,  paymentDate, amountPaid, paymentMethod);
+
+                payment.validate();
+
+                Main.payments.add(payment);
+
+                System.out.println("Fee Payment Registered Successfully.");
+
+            }
+             catch (ValidationException e) {
+                throw new RuntimeException(e);
+            }
+    }
 }
