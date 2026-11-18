@@ -30,7 +30,12 @@ public class Main {
             System.out.println("1. Register Department");
             System.out.println("2. Register Student");
             System.out.println("3. Register Teacher");
-            System.out.println("4. Register Administrator");            
+            System.out.println("4. Register Administrator");   
+            System.out.println("5. Register Course");
+            System.out.println("6. Register Classroom");
+            System.out.println("7. Register Enrollment");
+            System.out.println("8. Register Assessment");
+            System.out.println("9. Register Fee Payment");
             System.out.println("0. Exit");
 
             System.out.print("Select Option: ");
@@ -55,6 +60,26 @@ public class Main {
 
                     case 4:
                         registerAdministrator();
+                        break;
+
+                    case 5:
+                        registerCourse();
+                        break;
+
+                    case 6:
+                        registerClassroom();
+                        break;
+
+                    case 7:
+                        registerEnrollment();
+                        break;
+
+                    case 8:
+                        registerAssessment();
+                        break;
+                        
+                    case 9:
+                        registerFeePayment();
                         break;
                         
                     case 0:
@@ -631,6 +656,7 @@ public class Main {
         }
          catch (ValidationException e) {
             throw new RuntimeException(e);
+         }
         }
 
         public static void registerFeePayment() {
@@ -673,8 +699,10 @@ public class Main {
                 BigDecimal amountPaid = new BigDecimal(Main.sc.nextLine());
                 System.out.print("Payment Method: ");
                 String paymentMethod = Main.sc.nextLine();
+                System.out.print("Receipt Number: ");
+                String receiptNumber = Main.sc.nextLine();
 
-                FeePayment payment = new FeePayment(paymentId, student, amount,  paymentDate, amountPaid, paymentMethod);
+                FeePayment payment = new FeePayment(paymentId, student, amount,  paymentDate,  paymentMethod, receiptNumber);
 
                 payment.validate();
 
